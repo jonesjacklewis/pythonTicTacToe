@@ -1,20 +1,24 @@
 class TicTacToe:
     """A method to model a game of TicTacToe"""
 
-    def __init__(self, player_one, player_two, size=3):
+    def __init__(self, player_one, player_two, player_one_symbol = "x", player_two_symbol = "o", size=3):
         """The initialiser for the TicTacToe class
 
         Args:
             player_one (str): The name of player one
             player_two (str): The name of player two
-            size (int): The size of the board size x size. Defaults to 3.
+            player_one_symbol (str, optional): The symbol to represent player one. Defaults to "x".
+            player_two_symbol (str, optional): The symbol to represent player two. Defaults to "o".
+            size (int, optional): The size of the game board in the form size x size. Defaults to 3.
         """
 
         self.board = [["*" for _ in range(size)] for _ in range(size)]
 
         self.player_one = player_one
+        self.player_one_symbol = player_one_symbol
 
         self.player_two = player_two
+        self.player_two_symbol = player_two_symbol
 
         self.game_over = False
         self.winner = None
@@ -28,7 +32,7 @@ class TicTacToe:
         Args:
             coordinate (list): A list consisting of the x and y coordinates of the place to mark
         """
-        self.board[coordinate[1]][coordinate[0]] = "x"
+        self.board[coordinate[1]][coordinate[0]] = self.player_one_symbol
         self.output_board()
 
     def __player_two_move(self, coordinate):
@@ -37,7 +41,7 @@ class TicTacToe:
         Args:
             coordinate (list): A list consisting of the x and y coordinates of the place to mark
         """
-        self.board[coordinate[1]][coordinate[0]] = "o"
+        self.board[coordinate[1]][coordinate[0]] = self.player_two_symbol
         self.output_board()
 
     def __round(self):
@@ -107,9 +111,9 @@ class TicTacToe:
             board = self.board
         for row in board:
             if len(set(row)) == 1:
-                if row[0] == "x":
+                if row[0] == self.player_one_symbol:
                     return [True, self.player_one]
-                if row[1] == "o":
+                if row[0] == self.player_two_symbol:
                     return [True, self.player_two]
         return [False, None]
 
@@ -131,9 +135,9 @@ class TicTacToe:
         elements = [self.board[i][i] for i in range(len(self.board))]
 
         if len(set(elements)) == 1:
-            if elements[0] == "x":
+            if elements[0] == self.player_one_symbol:
                 return [True, self.player_one]
-            if elements[1] == "o":
+            if elements[0] == self.player_two_symbol:
                 return [True, self.player_two]
 
         return [False, None]
@@ -148,15 +152,16 @@ class TicTacToe:
         y = 0
         elements = []
 
-        while y != 0:
+        while y != len(self.board):
             elements.append(self.board[y][max_x])
             y += 1
             max_x -= 1
 
+
         if len(set(elements)) == 1:
-            if elements[0] == "x":
+            if elements[0] == self.player_one_symbol:
                 return [True, self.player_one]
-            if elements[1] == "o":
+            if elements[0] == self.player_two_symbol:
                 return [True, self.player_two]
 
         return [False, None]
